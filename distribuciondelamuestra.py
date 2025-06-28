@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 # ✅ URL RAW directa al CSV en GitHub
 
 @st.cache_data
-def 📊 Dashboard de Encuesta - Análisis de Datos():
+def cargar_datos():
     df = pd.read_csv("📊 Dashboard de Encuesta - Análisis de Datos")
     return df
 
