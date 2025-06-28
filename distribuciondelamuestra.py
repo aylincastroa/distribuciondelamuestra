@@ -197,11 +197,14 @@ folio = st.sidebar.text_input("Ingresa un número de folio")
 
 if folio:
   resultado = df[df['folio'].astype(str) == folio]
-    if not resultado.empty:
-        st.sidebar.success("Folio encontrado")
-        st.sidebar.dataframe(resultado)
-    else:
-        st.sidebar.warning("Folio no encontrado")
+  folio = st.number_input("Introduce el número de folio:", min_value=1, max_value=int(df["Folio"].max()), step=1)
+resultado = df[df['Folio'] == folio]
+
+if not resultado.empty:
+    st.success("Resultado encontrado:")
+    st.write(resultado)
+else:
+    st.warning("Folio no encontrado.")
 
 # Eliminar columna folio para análisis
 df_viz = df.drop(columns=['folio'])
