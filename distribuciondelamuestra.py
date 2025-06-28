@@ -7,7 +7,7 @@ st.set_page_config(page_title="Dashboard de Encuesta", layout="wide")
 st.title("📊 Dashboard de Encuesta - Análisis de Datos")
 
 # URL del CSV en GitHub (asegúrate que sea el link 'raw')
-Folio,Edad,Grado,Sexo,EDP,NSE,ZDR
+# Folio, Edad, Grado, Sexo, EDP, NSE, ZDR
 1,19,1,1,0,2,0
 2,19,1,1,0,1,0
 3,18,1,1,0,1,0
