@@ -196,7 +196,7 @@ st.sidebar.header("🔎 Búsqueda por Folio")
 folio = st.sidebar.text_input("Ingresa un número de folio")
 
 if folio:
-    resultado = df[df['folio'].astype(str) == folio]
+  resultado = df[df['folio'].astype(str) == folio]
     if not resultado.empty:
         st.sidebar.success("Folio encontrado")
         st.sidebar.dataframe(resultado)
