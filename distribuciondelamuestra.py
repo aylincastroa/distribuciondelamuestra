@@ -187,10 +187,9 @@ URL_CSV = "# Folio, Edad, Grado, Sexo, EDP, NSE, ZDR"
 
 @st.cache_data
 def cargar_datos():
-    df = pd.read_csv(URL_CSV)
+    df = pd.read_csv("📊 Dashboard de Encuesta - Análisis de Datos")
     return df
 
-df = cargar_datos()
 
 # Buscar por folio
 st.sidebar.header("🔎 Búsqueda por Folio")
