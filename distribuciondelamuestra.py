@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # ✅ URL RAW directa al CSV en GitHub
-URL_CSV = "# Folio, Edad, Grado, Sexo, EDP, NSE, ZDR
+URL_CSV = # Folio, Edad, Grado, Sexo, EDP, NSE, ZDR
 1,19,1,1,0,2,0
 2,19,1,1,0,1,0
 3,18,1,1,0,1,0
@@ -183,7 +183,7 @@ URL_CSV = "# Folio, Edad, Grado, Sexo, EDP, NSE, ZDR
 177,15,0,0,1,1,2
 178,16,0,0,1,1,2
 179,16,0,0,1,1,2
-180,16,0,0,1,1,2"
+180,16,0,0,1,1,2
 
 @st.cache_data
 def cargar_datos():
