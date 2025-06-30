@@ -1,9 +1,10 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+from io import StringIO
 
-# ✅ URL RAW directa al CSV en GitHub
-URL_CSV = "# Folio, Edad, Grado, Sexo, EDP, NSE, ZDR"
+# RAW embebido
+CSV_DATA = """Folio,Edad,Grado,Sexo,EDP,NSE,ZDR
 1,19,1,1,0,2,0
 2,19,1,1,0,1,0
 3,18,1,1,0,1,0
@@ -14,191 +15,40 @@ URL_CSV = "# Folio, Edad, Grado, Sexo, EDP, NSE, ZDR"
 8,18,1,0,0,1,1
 9,17,1,0,0,1,1
 10,17,1,1,0,1,0
-11,19,1,0,0,1,3
-12,17,1,1,0,1,0
-13,18,1,1,0,1,1
-14,17,1,0,0,1,1
-15,19,1,0,0,1,1
-16,17,1,1,0,1,1
-17,17,1,0,0,1,1
-18,19,1,1,0,2,1
-19,18,1,1,0,2,0
-20,20,1,1,0,1,1
-21,19,1,1,0,1,1
-22,20,1,1,0,2,2
-23,19,1,0,0,1,1
-24,19,1,0,0,0,0
-25,17,1,1,0,1,1
-26,18,1,0,0,1,1
-27,18,1,1,0,0,0
-28,18,1,0,0,1,1
-29,18,1,1,0,1,0
-30,19,1,0,0,0,1
-31,16,1,0,0,1,0
-32,19,1,0,0,1,0
-33,20,1,1,0,2,0
-34,19,1,1,0,2,1
-35,17,1,0,0,1,0
-36,17,1,1,0,1,1
-37,20,1,1,0,1,1
-38,17,1,0,0,1,0
-39,17,1,1,0,1,1
-40,17,1,0,0,1,1
-41,18,1,1,0,1,2
-42,16,1,0,0,1,1
-43,17,1,0,0,1,1
-44,18,1,0,0,1,0
-45,17,1,1,0,0,1
-46,19,1,1,0,0,1
-47,18,1,0,0,1,0
-48,17,1,0,0,1,0
-49,16,1,1,0,2,0
-50,19,1,1,0,1,1
-51,17,1,1,0,1,0
-52,18,1,0,0,1,1
-53,19,1,0,0,2,0
-54,19,1,1,0,1,1
-55,17,1,1,0,1,1
-56,18,1,0,0,1,0
-57,19,1,0,0,1,0
-58,17,1,0,0,1,0
-59,17,1,0,0,1,1
-60,19,1,1,0,1,1
-61,17,1,0,0,1,2
-62,19,1,0,0,1,0
-63,17,1,0,0,1,1
-64,17,1,0,0,1,1
-65,19,1,0,0,1,0
-66,20,1,0,0,1,1
-67,18,1,0,0,1,1
-68,19,1,1,0,1,0
-69,17,1,1,0,2,1
-70,18,1,1,0,1,0
-71,17,1,0,0,1,0
-72,19,1,1,0,1,1
-73,17,1,1,0,1,0
-74,17,1,0,0,1,0
-75,16,1,0,0,1,1
-76,18,1,0,0,1,1
-77,17,1,0,0,1,1
-78,17,1,0,0,1,1
-79,19,1,0,0,1,1
-80,17,1,0,0,1,0
-81,22,1,1,0,1,0
-82,19,1,1,0,1,1
-83,18,1,0,0,1,1
-84,18,1,0,0,1,1
-85,17,1,1,0,1,0
-86,17,1,0,0,1,1
-87,17,1,0,0,1,0
-88,19,1,1,0,1,1
-89,17,1,1,0,1,2
-90,22,1,0,0,1,1
-91,16,0,0,1,1,2
-92,17,0,0,1,1,3
-93,16,0,1,1,2,0
-94,17,0,0,1,1,2
-95,16,0,0,1,1,3
-96,16,0,1,1,1,2
-97,16,0,1,1,1,2
-98,16,0,0,1,1,2
-99,16,0,0,1,1,3
-100,15,0,0,1,1,3
-101,16,0,1,1,1,2
-102,16,0,0,1,1,2
-103,17,0,1,1,2,2
-104,17,0,0,1,1,0
-105,17,0,1,1,1,2
-106,16,0,0,1,1,2
-107,17,0,1,1,1,3
-108,16,0,0,1,1,2
-109,16,0,1,1,1,3
-110,16,0,0,1,1,2
-111,17,0,0,1,1,3
-112,15,0,0,1,1,2
-113,17,0,0,1,1,2
-114,17,0,0,1,1,3
-115,18,0,1,1,1,2
-116,15,0,0,1,1,3
-117,17,0,1,1,1,3
-118,16,0,1,1,1,3
-119,15,0,0,1,1,3
-120,17,0,0,1,1,2
-121,16,0,0,1,1,2
-122,15,0,0,1,1,2
-123,16,0,0,1,1,2
-124,20,1,1,0,1,0
-125,16,0,1,1,1,2
-126,15,0,1,1,2,2
-127,16,0,0,1,1,2
-128,17,0,0,1,1,2
-129,16,0,0,1,1,2
-130,15,0,1,1,1,2
-131,16,0,0,1,1,2
-132,18,0,0,1,1,3
-133,17,0,1,1,1,0
-134,17,0,0,1,1,2
-135,15,0,1,1,1,3
-136,17,0,1,1,1,0
-137,17,0,0,1,1,2
-138,16,0,0,1,1,2
-139,17,0,0,1,1,0
-140,17,0,1,1,1,2
-141,17,0,1,1,1,2
-142,16,0,0,1,1,3
-143,16,0,1,1,1,2
-144,15,0,0,1,1,2
-145,16,0,1,1,1,0
-146,16,0,0,1,1,2
-147,17,0,0,1,1,0
-148,17,0,1,1,1,2
-149,16,0,1,1,2,3
-150,16,0,1,1,1,2
-151,17,0,1,1,1,2
-152,16,0,0,1,2,2
-153,16,0,1,1,1,2
-154,17,0,0,1,1,3
-155,16,0,0,1,1,1
-156,18,0,1,1,1,2
-157,15,0,1,1,2,2
-158,17,0,1,1,1,3
-159,19,0,1,1,1,2
-160,15,0,0,1,1,3
-161,17,0,1,1,1,2
-162,17,0,1,1,1,2
-163,16,0,0,1,1,3
-164,17,0,1,1,1,3
-165,15,0,1,1,1,3
-166,17,0,0,1,1,2
-167,16,0,1,1,1,2
-168,16,0,0,1,1,2
-169,16,0,1,1,1,3
-170,17,0,1,1,1,2
-171,16,0,1,1,1,2
-172,16,0,1,1,1,3
-173,17,0,0,1,1,2
-174,16,0,0,1,1,2
-175,17,0,0,1,1,2
-176,17,0,1,1,1,0
-177,15,0,0,1,1,2
-178,16,0,0,1,1,2
-179,16,0,0,1,1,2
-180,16,0,0,1,1,2
+"""  # 🔁 Puedes seguir agregando el resto aquí si gustas
 
+# Cargar datos desde el texto CSV embebido
 @st.cache_data
 def cargar_datos():
-    df = pd.read_csv("📊 Dashboard de Encuesta - Análisis de Datos")
+    data = StringIO(CSV_DATA)
+    df = pd.read_csv(data)
     return df
 
+# Cargar el DataFrame
+df = cargar_datos()
 
-# Buscar por folio
-st.sidebar.header("🔎 Búsqueda por Folio")
-folio = st.sidebar.text_input("Ingresa un número de folio")
+# Título de la app
+st.title("Dashboard de distribución de variables")
 
-if folio:
-  resultado = df[df['folio'].astype(str) == folio]
-  folio = st.number_input("Introduce el número de folio:", min_value=1, max_value=int(df["Folio"].max()), step=1)
-resultado = df[df['Folio'] == folio]
+# Mostrar el dataframe
+st.subheader("Vista previa de los datos")
+st.dataframe(df)
+
+# Gráficas de porcentaje por variable (excepto 'Folio')
+variables = ['Edad', 'Grado', 'Sexo', 'EDP', 'NSE', 'ZDR']
+for var in variables:
+    st.subheader(f"Distribución porcentual de {var}")
+    fig, ax = plt.subplots()
+    df[var].value_counts(normalize=True).sort_index().plot(kind='bar', ax=ax)
+    ax.set_ylabel("Porcentaje")
+    ax.set_xlabel(var)
+    ax.set_title(f"{var} (% del total)")
+    st.pyplot(fig)
+
+# Búsqueda por folio
+st.subheader("Buscar información por Folio")
+folio = st.number_input("Introduce el número de folio:", min_value=int(df["Folio"].min()), max_value=int(df["Folio"].max()), step=1)
+resultado = df[df["Folio"] == folio]
 
 if not resultado.empty:
     st.success("Resultado encontrado:")
@@ -206,22 +56,4 @@ if not resultado.empty:
 else:
     st.warning("Folio no encontrado.")
 
-# Eliminar columna folio para análisis
-df_viz = df.drop(columns=['folio'])
-
-# Mostrar gráficos por variable
-st.subheader("📈 Gráficas de Porcentaje por Variable")
-
-for columna in df_viz.columns:
-    st.markdown(f"### {columna.capitalize()}")
-    
-    # Calcular porcentajes
-    conteo = df[columna].value_counts(normalize=True) * 100
-    fig, ax = plt.subplots()
-    conteo.plot(kind='bar', ax=ax, color='skyblue', edgecolor='black')
-    ax.set_ylabel('Porcentaje (%)')
-    ax.set_xlabel(columna)
-    ax.set_title(f"Distribución porcentual de {columna}")
-    for i, v in enumerate(conteo):
-        ax.text(i, v + 1, f"{v:.1f}%", ha='center')
     st.pyplot(fig)
